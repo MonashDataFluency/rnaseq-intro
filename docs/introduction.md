@@ -16,11 +16,11 @@ header-includes:
 
 These are course notes for the "Introduction to RNAseq" course given by the [Monash Bioinformatics Platform](https://www.monash.edu/researchinfrastructure/bioinformatics) for the [Monash Data Fluency](https://monashdatafluency.github.io/) initiative. Our teaching style is based on the style of [The Carpentries](https://carpentries.org/).
 
-* [PDF version for printing](https://monashdatafluency.github.io/r-intro-2/r-intro-2.pdf)
+* [PDF version for printing](https://monashdatafluency.github.io/rnaseq-intro/rnaseq-intro.pdf)
 
 ### Source code {-}
 
-* [GitHub page](https://github.com/MonashDataFluency/r-intro-2)
+* [GitHub page](https://github.com/MonashDataFluency/rnaseq-intro)
 
 ### Authors and copyright {-}
 
