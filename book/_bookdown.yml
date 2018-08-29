@@ -1,0 +1,12 @@
+
+rmd_files: 
+  - introduction.Rmd
+  - genomics.Rmd
+  - refseq.Rmd
+  - annotation.Rmd
+  - file_formats.Rmd
+  - other.Rmd
+
+new_session: yes
+output_dir: "../docs"
+book_filename: "rnaseq-intro"
