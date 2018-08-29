@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Introduction to RNAseq</title>
+  <meta name="description" content="Introduction to RNAseq">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Introduction to RNAseq" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Introduction to RNAseq" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="lesson-plan.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction to RNAseq</a></li>
+<li class="chapter" data-level="1" data-path="genomics.html"><a href="genomics.html"><i class="fa fa-check"></i><b>1</b> Genomics</a><ul>
+<li class="chapter" data-level="1.1" data-path="genomics.html"><a href="genomics.html#sequence"><i class="fa fa-check"></i><b>1.1</b> Sequence</a></li>
+<li class="chapter" data-level="1.2" data-path="genomics.html"><a href="genomics.html#read-sequence"><i class="fa fa-check"></i><b>1.2</b> Read sequence</a></li>
+<li class="chapter" data-level="1.3" data-path="genomics.html"><a href="genomics.html#contig-sequence"><i class="fa fa-check"></i><b>1.3</b> Contig sequence</a></li>
+<li class="chapter" data-level="1.4" data-path="genomics.html"><a href="genomics.html#summary"><i class="fa fa-check"></i><b>1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="reference-sequence.html"><a href="reference-sequence.html"><i class="fa fa-check"></i><b>2</b> Reference sequence</a><ul>
+<li class="chapter" data-level="2.1" data-path="reference-sequence.html"><a href="reference-sequence.html#exercise"><i class="fa fa-check"></i><b>2.1</b> Exercise</a></li>
+<li class="chapter" data-level="2.2" data-path="reference-sequence.html"><a href="reference-sequence.html#rule-of-thumb"><i class="fa fa-check"></i><b>2.2</b> Rule of thumb</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="gene-annotation.html"><a href="gene-annotation.html"><i class="fa fa-check"></i><b>3</b> Gene annotation</a></li>
+<li class="chapter" data-level="4" data-path="file-formats.html"><a href="file-formats.html"><i class="fa fa-check"></i><b>4</b> File formats</a><ul>
+<li class="chapter" data-level="4.1" data-path="file-formats.html"><a href="file-formats.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="file-formats.html"><a href="file-formats.html#plain-text-files"><i class="fa fa-check"></i><b>4.2</b> Plain text files</a></li>
+<li class="chapter" data-level="4.3" data-path="file-formats.html"><a href="file-formats.html#glossary"><i class="fa fa-check"></i><b>4.3</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html"><i class="fa fa-check"></i><b>5</b> All about RNAseq</a><ul>
+<li class="chapter" data-level="5.1" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html#general"><i class="fa fa-check"></i><b>5.1</b> General</a></li>
+<li class="chapter" data-level="5.2" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html#technology"><i class="fa fa-check"></i><b>5.2</b> Technology</a></li>
+<li class="chapter" data-level="5.3" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html#differential-expression-de"><i class="fa fa-check"></i><b>5.3</b> Differential expression (DE)</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lesson-plan.html"><a href="lesson-plan.html"><i class="fa fa-check"></i><b>6</b> Lesson plan</a></li>
+<li class="chapter" data-level="7" data-path="meeting-notes.html"><a href="meeting-notes.html"><i class="fa fa-check"></i><b>7</b> Meeting notes</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to RNAseq</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="meeting-notes" class="section level1">
+<h1><span class="header-section-number">7</span> Meeting notes</h1>
+<p>This is overall them of the day</p>
+<blockquote>
+<p>How to instruct them to be good RNAseq user?</p>
+</blockquote>
+<p>have a url with multiqc page ready?</p>
+<p>This is</p>
+<p>explain reference file (FASTA) and annotation files (GTF)</p>
+<p>This if you can set up ftp link so that users can pont and click through directory structure to interact with the sikRun output.</p>
+<p>Mentione salmon</p>
+<p>Good to mention in parsing - salmon if you are using salmon you not going to see DNA contamination. so something to be aware.</p>
+<p>Also mentione that this is for model organism that are well annotation/assembled.</p>
+<p>Use Chiara’s data to study chromosome 21. From multiqc report chromosome 21 has a lot more reads. It looks like ribosomal contamination even though library was polyA pooled.</p>
+<p>Take all reads from chr21 and do feature counts and look where reads go. Suspecting that reads go to ribosomal genes. If so this would be great case study for the workshop.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/pubmed/29788454" class="uri">https://www.ncbi.nlm.nih.gov/pubmed/29788454</a></p>
+<p>genotify</p>
+<p>Reproducible research using the same reference files</p>
+<p>TCGA for example is using a single reference for the whole cohort</p>
+<p>If you gonna do second study e.g chipSeq you gotta have it on the same reference as your RNAseq</p>
+<p>there is no such thing as “the reference genome” there are different builds, it is work in progress</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="lesson-plan.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["rnaseq-intro.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
