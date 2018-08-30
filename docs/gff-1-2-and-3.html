@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Introduction to RNAseq</title>
+  <meta name="description" content="Introduction to RNAseq">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Introduction to RNAseq" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Introduction to RNAseq" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="bioinformatics-file-formats.html">
+<link rel="next" href="all-about-rnaseq.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction to RNAseq</a></li>
+<li class="chapter" data-level="1" data-path="genomics.html"><a href="genomics.html"><i class="fa fa-check"></i><b>1</b> Genomics</a><ul>
+<li class="chapter" data-level="1.1" data-path="genomics.html"><a href="genomics.html#sequence"><i class="fa fa-check"></i><b>1.1</b> Sequence</a></li>
+<li class="chapter" data-level="1.2" data-path="genomics.html"><a href="genomics.html#read-sequence"><i class="fa fa-check"></i><b>1.2</b> Read sequence</a></li>
+<li class="chapter" data-level="1.3" data-path="genomics.html"><a href="genomics.html#contig-sequence"><i class="fa fa-check"></i><b>1.3</b> Contig sequence</a></li>
+<li class="chapter" data-level="1.4" data-path="genomics.html"><a href="genomics.html#summary"><i class="fa fa-check"></i><b>1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="reference-sequence.html"><a href="reference-sequence.html"><i class="fa fa-check"></i><b>2</b> Reference sequence</a><ul>
+<li class="chapter" data-level="2.1" data-path="reference-sequence.html"><a href="reference-sequence.html#exercise"><i class="fa fa-check"></i><b>2.1</b> Exercise</a></li>
+<li class="chapter" data-level="2.2" data-path="reference-sequence.html"><a href="reference-sequence.html#rule-of-thumb"><i class="fa fa-check"></i><b>2.2</b> Rule of thumb</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="gene-annotation.html"><a href="gene-annotation.html"><i class="fa fa-check"></i><b>3</b> Gene annotation</a></li>
+<li class="chapter" data-level="4" data-path="bioinformatics-file-formats.html"><a href="bioinformatics-file-formats.html"><i class="fa fa-check"></i><b>4</b> Bioinformatics file formats</a><ul>
+<li class="chapter" data-level="4.1" data-path="bioinformatics-file-formats.html"><a href="bioinformatics-file-formats.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="bioinformatics-file-formats.html"><a href="bioinformatics-file-formats.html#what-is-a-file-format"><i class="fa fa-check"></i><b>4.2</b> What is a file format?</a></li>
+<li class="chapter" data-level="4.3" data-path="bioinformatics-file-formats.html"><a href="bioinformatics-file-formats.html#annotation-files"><i class="fa fa-check"></i><b>4.3</b> Annotation files</a></li>
+<li class="chapter" data-level="4.4" data-path="bioinformatics-file-formats.html"><a href="bioinformatics-file-formats.html#plain-text-files"><i class="fa fa-check"></i><b>4.4</b> Plain text files</a></li>
+<li class="chapter" data-level="4.5" data-path="bioinformatics-file-formats.html"><a href="bioinformatics-file-formats.html#glossary"><i class="fa fa-check"></i><b>4.5</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="gff-1-2-and-3.html"><a href="gff-1-2-and-3.html"><i class="fa fa-check"></i><b>5</b> GFF 1, 2 and 3</a><ul>
+<li class="chapter" data-level="5.1" data-path="gff-1-2-and-3.html"><a href="gff-1-2-and-3.html#general-feature-format"><i class="fa fa-check"></i><b>5.1</b> General Feature Format</a></li>
+<li class="chapter" data-level="5.2" data-path="gff-1-2-and-3.html"><a href="gff-1-2-and-3.html#general-feature-format-version-1-gff1"><i class="fa fa-check"></i><b>5.2</b> General Feature Format Version 1 (GFF1)</a></li>
+<li class="chapter" data-level="5.3" data-path="gff-1-2-and-3.html"><a href="gff-1-2-and-3.html#general-feature-format-version-2-gff2"><i class="fa fa-check"></i><b>5.3</b> General Feature Format Version 2 (GFF2)</a></li>
+<li class="chapter" data-level="5.4" data-path="gff-1-2-and-3.html"><a href="gff-1-2-and-3.html#general-feature-format-version-3-gff3"><i class="fa fa-check"></i><b>5.4</b> General Feature Format Version 3 (GFF3)</a></li>
+<li class="chapter" data-level="5.5" data-path="gff-1-2-and-3.html"><a href="gff-1-2-and-3.html#gene-transfer-format-gtf"><i class="fa fa-check"></i><b>5.5</b> Gene Transfer Format (GTF)</a></li>
+<li class="chapter" data-level="5.6" data-path="gff-1-2-and-3.html"><a href="gff-1-2-and-3.html#how-to-parse-gffgtf-file.."><i class="fa fa-check"></i><b>5.6</b> How to parse GFF/GTF file..?</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html"><i class="fa fa-check"></i><b>6</b> All about RNAseq</a><ul>
+<li class="chapter" data-level="6.1" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html#general"><i class="fa fa-check"></i><b>6.1</b> General</a></li>
+<li class="chapter" data-level="6.2" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html#technology"><i class="fa fa-check"></i><b>6.2</b> Technology</a></li>
+<li class="chapter" data-level="6.3" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html#differential-expression-de"><i class="fa fa-check"></i><b>6.3</b> Differential expression (DE)</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="lesson-plan.html"><a href="lesson-plan.html"><i class="fa fa-check"></i><b>7</b> Lesson plan</a></li>
+<li class="chapter" data-level="8" data-path="meeting-notes.html"><a href="meeting-notes.html"><i class="fa fa-check"></i><b>8</b> Meeting notes</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to RNAseq</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="gff-1-2-and-3" class="section level1">
+<h1><span class="header-section-number">5</span> GFF 1, 2 and 3</h1>
+<blockquote>
+<p>The essence of GFF file format is to avoid databases</p>
+</blockquote>
+<div id="general-feature-format" class="section level2">
+<h2><span class="header-section-number">5.1</span> General Feature Format</h2>
+<blockquote>
+<p>A ‘Feature’ could mean complete gene, RNA transcript or protein structure or pretty much anything</p>
+</blockquote>
+<ul>
+<li>Plain text file format</li>
+<li>The format was proposed as a means to transfer feature information</li>
+<li>We do not intend GFF format to be used for complete data management of the analysis and annotation of genomic sequence</li>
+<li>Originally wanted file format that will be easily parsable by Unix tools such <code>grep</code>, <code>sort</code> and <code>awk</code></li>
+</ul>
+</div>
+<div id="general-feature-format-version-1-gff1" class="section level2">
+<h2><span class="header-section-number">5.2</span> General Feature Format Version 1 (GFF1)</h2>
+<ul>
+<li>I have never seen one</li>
+<li>I think it is obsolete and was superseded by GFF2</li>
+</ul>
+<p><strong>The main change from version 1 to 2 is the requirement for a tag-value type structure</strong></p>
+</div>
+<div id="general-feature-format-version-2-gff2" class="section level2">
+<h2><span class="header-section-number">5.3</span> General Feature Format Version 2 (GFF2)</h2>
+<ul>
+<li>9 fields</li>
+<li>Tab separated</li>
+</ul>
+<pre><code>&lt;SeqName&gt;\t&lt;Source&gt;\t&lt;Feature&gt;\t&lt;start&gt;\t&lt;end&gt;\t&lt;score&gt;\t&lt;strand&gt;\t&lt;frame&gt;\t&lt;[Attributes]&gt;\t&lt;[Comments]&gt;</code></pre>
+<ul>
+<li>The attribute field is some what free form:
+<ol style="list-style-type: decimal">
+<li>It must have Tag-Value Pairing, where each pair is separated by semicolon</li>
+<li>The Tag name can be anything within <code>[A-Za-z][A-Za-z0-9_]*</code></li>
+<li>The value can be anything. Free text must be surrounded by double quotes</li>
+<li>All ‘special’ Unix character must be properly escaped e.g newline as <code>\n</code> and tab as <code>\t</code></li>
+</ol></li>
+<li><a href="http://www.sanger.ac.uk/resources/software/gff/spec.html">General Feature Format Version 2 (GFF2) specifications</a></li>
+</ul>
+<p><strong>All other flavours of GFF’s and GTF’s are divergent of GFF2</strong></p>
+</div>
+<div id="general-feature-format-version-3-gff3" class="section level2">
+<h2><span class="header-section-number">5.4</span> General Feature Format Version 3 (GFF3)</h2>
+<ul>
+<li>Reason for ‘new’, GFF3 format is that GFF2 has become insuffcient for bioinformatcians</li>
+<li><p>Key aspects about GFF3:</p>
+<ol style="list-style-type: decimal">
+<li>Adds a mechanism for representing more than one level of hierarchical grouping of features and subfeatures.</li>
+<li>Separates the ideas of group membership and feature name/id.</li>
+<li>Constrains the feature type field to be taken from a controlled vocabulary.</li>
+<li>Allows a single feature, such as an exon, to belong to more than one group at a time.</li>
+<li>Provides an explicit convention for pairwise alignments.</li>
+<li>Provides an explicit convention for features that occupy disjunct regions.</li>
+</ol></li>
+<li>Tag-Value pairing is now must be separated by an <code>=</code> sign</li>
+<li>Tag-Value pairs are still separated by <code>;</code></li>
+<li><p>Predefined meaning for some tags</p>
+<ol style="list-style-type: decimal">
+<li><strong>ID</strong> Indicates the ID of the feature. IDs for each feature must be unique within the scope of the GFF file. In the case of discontinuous features (i.e. a single feature that exists over multiple genomic locations) the same ID may appear on multiple lines. All lines that share an ID collectively represent a single feature.</li>
+<li><strong>Name</strong> Display name for the feature. This is the name to be displayed to the user. Unlike IDs, there is no requirement that the Name be unique within the file.</li>
+<li><strong>Alias</strong> A secondary name for the feature. It is suggested that this tag be used whenever a secondary identifier for the feature is needed, such as locus names and accession numbers. Unlike ID, there is no requirement that Alias be unique within the file.</li>
+<li><strong>Parent</strong> Indicates the parent of the feature. A parent ID can be used to group exons into transcripts, transcripts into genes, an so forth. A feature may have multiple parents. Parent can <em>only</em> be used to indicate a partof relationship.</li>
+<li><strong>Target</strong> Indicates the target of a nucleotide-to-nucleotide or protein-to-nucleotide alignment. The format of the value is “target_id start end strand”, where strand is optional and may be “+” or “-”. If the target_id contains spaces, they must be escaped as hex escape</li>
+<li><strong>Gap</strong> The alignment of the feature to the target if the two are not collinear (e.g. contain gaps). The alignment format is taken from the CIGAR format described in the Exonerate documentation. See “THE GAP ATTRIBUTE” for a description of this format.</li>
+<li><strong>Derives_from</strong> Used to disambiguate the relationship between one feature and another when the relationship is a temporal one rather than a purely structural “part of” one. This is needed for polycistronic genes. See “PATHOLOGICAL CASES” for further discussion.</li>
+<li><strong>Note</strong> A free text note.</li>
+<li><strong>Dbxref</strong> A database cross reference. See the section “Ontology Associations and Db Cross References” for details on the format.</li>
+<li><strong>Ontology_term</strong> A cross reference to an ontology term. See the section “Ontology Associations and Db Cross References” for details.</li>
+<li><strong>Is_circular</strong> A flag to indicate whether a feature is circular. See extended discussion below.</li>
+</ol></li>
+<li><p>Able to add sequence to the GFF3 file. Use <code>## FASTA</code> as a separator line between annotation and sequence</p></li>
+<li><p><a href="http://www.sequenceontology.org/gff3.shtml">Generic Feature Format Version 3 (GFF3) specifications</a></p>
+<ol style="list-style-type: decimal">
+<li><strong>Tag-Value pair separated by <code>=</code></strong></li>
+<li><strong>Tag-Value pairs separated by <code>;</code></strong></li>
+<li><strong>You can now associate features together through <code>ID</code>/<code>Parent</code> tag</strong></li>
+</ol></li>
+</ul>
+</div>
+<div id="gene-transfer-format-gtf" class="section level2">
+<h2><span class="header-section-number">5.5</span> Gene Transfer Format (GTF)</h2>
+<ul>
+<li><code>GTF</code> is a refinement of <code>GFF2</code> and is sometimes referred to as <code>GFF2.5</code></li>
+</ul>
+<p><strong>Be careful about this assumption ! Some tools might produce/convert your other <code>GFF</code> file to <code>GFF2.5</code>, but this new <code>GFF2.5</code> file might not be compatible with your specific tool that expects <code>GTF</code> file</strong></p>
+<ul>
+<li><code>GTF</code> file is somewhat a subclass of <code>GFF</code></li>
+<li><p>Original GTF specification said that all features must have two mandatory attributes:</p>
+<ol style="list-style-type: decimal">
+<li><code>gene_id</code> <em>value</em></li>
+<li><code>transcript_id</code> <em>value</em></li>
+</ol></li>
+<li>This is to handle different transcript from the same gene</li>
+<li>However <a href="http://www.gencodegenes.org/gencodeformat.html">GENCODE</a> has more mandatory fields</li>
+<li>Tag-Value pair separated by space !</li>
+<li>Tag-Value paies separated by <code>;</code></li>
+<li><p><a href="http://mblab.wustl.edu/GTF2.html">Gene Transfer Format (GTF) specification</a></p></li>
+</ul>
+<p><strong>To me at least <code>GTF</code> is the most established and predefined gene annotation format</strong></p>
+<blockquote>
+<p><a href="http://www.broadinstitute.org/annotation/argo/help/gff.html">Three GFF versions comparison</a></p>
+</blockquote>
+</div>
+<div id="how-to-parse-gffgtf-file.." class="section level2">
+<h2><span class="header-section-number">5.6</span> How to parse GFF/GTF file..?</h2>
+<ol style="list-style-type: decimal">
+<li><p>Unix tools</p>
+<ul>
+<li><code>grep Grhl1 yourAnnotationFile.gff | less</code></li>
+<li><code>grep -w gene yourAnnotationFile.gff | less</code></li>
+<li><code>grep -w exon yourAnnotationFile.gff | less</code></li>
+<li><code>cut -f1,3,4,5,7 yourAnnotationFile.gff | less</code></li>
+</ul></li>
+<li><p>Text Editor or spreadsheet tools</p>
+<ul>
+<li>Vim</li>
+<li>Gedit</li>
+<li>sublime</li>
+<li>LibreOffice</li>
+<li>MS Office</li>
+</ul></li>
+<li><p>Programmatically</p>
+<ul>
+<li>Python</li>
+<li>R</li>
+<li>Perl</li>
+</ul></li>
+</ol>
+<div id="parse-gffgtf-with-python" class="section level3">
+<h3><span class="header-section-number">5.6.1</span> Parse GFF/GTF with Python</h3>
+<ul>
+<li>Tricky to associate features together e.g exon to transcript and transcript to gene</li>
+<li>Need to ‘look ahead and look behind’, but how far ..?</li>
+<li>Different gene will have different number of features (lines) associated with it</li>
+<li>GFF/GTF is rather big file around 1.0 - 1.5 Gb (the size will really depend on the species)</li>
+<li>Can make one big hash (dictionary) and keep it all in memory..</li>
+<li>Best I think to write your personalised hash (dictionary) to a file</li>
+</ul>
+</div>
+<div id="python-packages-for-dealing-with-gffgtf" class="section level3">
+<h3><span class="header-section-number">5.6.2</span> Python packages for dealing with GFF/GTF</h3>
+<ol style="list-style-type: decimal">
+<li><p><a href="https://gist.github.com/slowkow/8101481">Nice bunch of functions from Gist</a></p>
+<ul>
+<li>Found this too slow and didn’t want to keep it all in memory</li>
+</ul></li>
+<li><p><a href="https://pypi.python.org/pypi/bcbio-gff/0.6.2">bcbio-gff a.k.a GFF parser</a></p>
+<ul>
+<li>Also found it to be slow and confusing</li>
+</ul></li>
+<li><p><a href="http://pythonhosted.org/gffutils/">gffutils</a></p>
+<ul>
+<li>Really liked it using it and now use if all the time</li>
+<li><p>Two step process:</p>
+<ol style="list-style-type: decimal">
+<li>Make database file <code>.db</code> from your GFF/GTF file</li>
+<li>Parse anything you want from your <code>.db</code> file</li>
+</ol></li>
+</ul></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">db <span class="op">=</span> gffutils.FeatureDB(dbFile, keep_order<span class="op">=</span><span class="va">True</span>)
+features <span class="op">=</span> db.all_features()</code></pre></div>
+<ul>
+<li><code>features</code> is now your generator object, meaning you can loop over it</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">db <span class="op">=</span> gffutils.FeatureDB(dbFile, keep_order<span class="op">=</span><span class="va">True</span>)
+features <span class="op">=</span> db.all_features()
+
+<span class="cf">for</span> feature <span class="kw">in</span> features:
+    <span class="bu">print</span> feature</code></pre></div>
+<ul>
+<li><p>And now you can get all this things for your single feature (GFF line)</p>
+<ul>
+<li><code>astuple</code></li>
+<li><code>attributes</code></li>
+<li><code>bin</code></li>
+<li><code>calc_bin</code></li>
+<li><code>chrom</code></li>
+<li><code>dialect</code></li>
+<li><code>end</code></li>
+<li><code>extra</code></li>
+<li><code>featuretype</code></li>
+<li><code>file_order</code></li>
+<li><code>frame</code></li>
+<li><code>id</code></li>
+<li><code>keep_order</code></li>
+<li><code>score</code></li>
+<li><code>seqid</code></li>
+<li><code>sequence</code></li>
+<li><code>sort_attribute_values</code></li>
+<li><code>source</code></li>
+<li><code>start</code></li>
+<li><code>stop</code></li>
+<li><code>strand</code></li>
+</ul></li>
+</ul>
+<blockquote>
+<p>By trying very hard to move away from databases we ended having database as the best solution</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bioinformatics-file-formats.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="all-about-rnaseq.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["rnaseq-intro.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
