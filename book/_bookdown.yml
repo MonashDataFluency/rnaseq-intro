@@ -5,6 +5,7 @@ rmd_files:
   - refseq.Rmd
   - annotation.Rmd
   - file_formats.Rmd
+  - check.Rmd
   - other.Rmd
 
 new_session: yes

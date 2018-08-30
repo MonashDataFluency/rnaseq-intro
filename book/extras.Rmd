@@ -1,0 +1,2 @@
+
+A server is just another computer, typically larger in size then your average desktop computer, mainly because it needs to fit more RAM and CPUs in to do computational work - bioinformatics. Typically you would access the server via another computer i.e remotely, mainly because you don't want large noisy computer in your office or home that is one all the time. Security is another important aspect of servers being "hidden" else where. It is the easiest to still information from the computer (server) if you have physical access to it.
