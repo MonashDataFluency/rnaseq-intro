@@ -2,10 +2,10 @@
 rmd_files: 
   - introduction.Rmd
   - genomics.Rmd
-  - refseq.Rmd
-  - annotation.Rmd
   - file_formats.Rmd
-  - check.Rmd
+  - refseq.Rmd
+    #- annotation.Rmd
+    #- check.Rmd
   - other.Rmd
 
 new_session: yes
