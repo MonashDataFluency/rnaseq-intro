@@ -1,3 +1,11 @@
 # Gene annotation
 
 As discussed in [reference genome] module. The reference genome is just a string of charaters. 
+
+```{r echo=F, fig.cap = " "}
+knitr::include_graphics("figures/gene_diagram.png")
+```
+
+```{r echo=F, fig.cap = " "}
+knitr::include_graphics("figures/features_diagram.png")
+```
