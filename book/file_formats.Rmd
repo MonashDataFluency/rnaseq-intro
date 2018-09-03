@@ -28,7 +28,7 @@ Let's talk next about what makes different file formats different
 
 The file format at it simplest defines structure with in the file. By far the most common structure of the plain text file is tabular. The spreadsheet that everyone is so familiar with is simply a plain text file with rows and columns, where each cell separated by a "special" character called `tabular` or `tab` for short, which makes tab separated variables file or tsv for short with a sister file of comma separated variables or csv for short where instead of `tab` character comma is used.
 
-**Comma Separated Variables (csv)**
+**Tab Separated Variables (tsv)**
 
 ```
 Gene.ID	Chrom	Gene.Name	Biotype	KO3_S3	KO4_S4	WT1_S1	WT2_S2
@@ -43,7 +43,7 @@ ENSMUSG00000033813	1	Tcea1	protein_coding	354	436	368	442
 ENSMUSG00000002459	1	Rgs20	protein_coding	0	0	0	0
 ```
 
-**Tab Separated Variables (tsv)**
+**Comma Separated Variables (csv)**
 
 ```
 Gene.ID,Chrom,Gene.Name,Biotype,KO3_S3,KO4_S4,WT1_S1,WT2_S2
