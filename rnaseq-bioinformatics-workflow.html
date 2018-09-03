@@ -85,6 +85,7 @@
 <li class="chapter" data-level="5" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html"><i class="fa fa-check"></i><b>5</b> RNAseq bioinformatics workflow</a><ul>
 <li class="chapter" data-level="5.1" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html#alignment"><i class="fa fa-check"></i><b>5.1</b> Alignment</a></li>
 <li class="chapter" data-level="5.2" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html#read-counting"><i class="fa fa-check"></i><b>5.2</b> Read counting</a></li>
+<li class="chapter" data-level="5.3" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html#summary-1"><i class="fa fa-check"></i><b>5.3</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="qc.html"><a href="qc.html"><i class="fa fa-check"></i><b>6</b> QC</a><ul>
 <li class="chapter" data-level="6.1" data-path="qc.html"><a href="qc.html#number-of-mapped-reads"><i class="fa fa-check"></i><b>6.1</b> Number of mapped reads</a></li>
@@ -168,37 +169,106 @@ tp53_ko_rep3_R1.fastq.gz    tp53_ko_rep3.bam    tp53_ko_rep3_sorted.bam</code></
 </div>
 <div id="read-counting" class="section level2">
 <h2><span class="header-section-number">5.2</span> Read counting</h2>
-<p>Let’s remind ourselves what an RNAseq data looks like if we visualise it. There are number of different</p>
+<div id="introduction-1" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Introduction</h3>
+<p>Before leaping into what read counting is let’s remind ourselves quickly what an RNAseq data looks like if we visualise it. There are number of different applications that you can use to visualise, but the one we most commonly use is <a href="http://software.broadinstitute.org/software/igv/">Integrative Genomics Viewer (IGV)</a></p>
 <div class="figure"><span id="fig:unnamed-chunk-1"></span>
-<img src="figures/igv_plot.jpg" alt="[RNAseq data visualisation (follow a link for reference)](https://secure.clcbio.com/helpspot/index.php?pg=kb.page&amp;id=380)"  />
+<img src="figures/igv12.png" alt="IGV browser view of one sample"  />
 <p class="caption">
-Figure 5.1: <a href="https://secure.clcbio.com/helpspot/index.php?pg=kb.page&amp;id=380">RNAseq data visualisation (follow a link for reference)</a>
+Figure 5.1: IGV browser view of one sample
 </p>
 </div>
+<p>Typically however there are multiple samples you’d be looking, which I left out from the image for clarity of view.</p>
+<p>Here is schematic view of what you typical see in a genome viewer</p>
 <p><img src="figures/rnaseq2.png" /><!-- --></p>
-<p>We typically should see reads only around feature, all reads should remain within the feature coordinates boundary. Reads should pile up on exons with clear boundaries between adjacent exons. Reads can and do map anywhere though and then reads fall outside of “normal” regions it could be an interesting case to follow up. It does by in large starts with some visualisation, which often can be rather manual.</p>
+<p>The three things that we always need for visualisation of that kind are:</p>
+<ul>
+<li>reference genome file (FASTA)</li>
+<li>annotation file (GTF/GFF)</li>
+<li><p>data:</p>
+<ul>
+<li>bam: these are information reach, but slow to load and navigate</li>
+<li>bigWig: one example of coverage plot file, just show the coverage, samll and quick</li>
+<li>vcf: variant information, not part of this course</li>
+</ul></li>
+</ul>
+<p>Note that something like IGV already comes with in built reference and annotation files, but just remember that it’s likely comes with different version of the genome. Often time IGV reference files will be good enough for first look and if you start suspecting something you should load your specific reference.</p>
+<blockquote>
+<p>Go through igv screen shoots and explain few different concenpts, like overlapping features</p>
+</blockquote>
+<p>Now that we’ve recapped what RNAseq data typically looks like lets talk how we approach read counting bioinformatically</p>
+</div>
+<div id="table-of-counts" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Table of counts</h3>
+<p>Given an alignment map file a.k.a bam file and an annotation file e.g GTF we need to systematically go through every read in the bma file and assign it to a feature in the annotation file. Ultimately we would like to get contiguous table or simply, table of counts, where each row is a gene and columns are our samples. Here is a top few lines from typical table of counts.</p>
+<pre><code>Gene.ID Chrom   Gene.Name   Biotype KO3_S3  KO4_S4  WT1_S1  WT2_S2
+ENSMUSG00000051951  1   Xkr4    protein_coding  0   0   0   0
+ENSMUSG00000025900  1   Rp1 protein_coding  0   0   0   0
+ENSMUSG00000109048  1   Rp1 protein_coding  0   0   0   0
+ENSMUSG00000025902  1   Sox17   protein_coding  0   0   0   0
+ENSMUSG00000033845  1   Mrpl15  protein_coding  934 1317    888 939
+ENSMUSG00000025903  1   Lypla1  protein_coding  705 848 647 747
+ENSMUSG00000104217  1   Gm37988 protein_coding  0   0   0   0
+ENSMUSG00000033813  1   Tcea1   protein_coding  354 436 368 442
+ENSMUSG00000002459  1   Rgs20   protein_coding  0   0   0   0</code></pre>
+<p>Note that this table has a few extra columns with some extra information, those aren’t strictly necessary, but do allow to put things into biological picture.</p>
+<p>This table would be minimal information you need for differential analysis. Note that <code>Gene.ID</code> column has to be unique values.</p>
+<pre><code>Gene.ID KO3_S3  KO4_S4  WT1_S1  WT2_S2
+ENSMUSG00000051951  0   0   0   0
+ENSMUSG00000025900  0   0   0   0
+ENSMUSG00000109048  0   0   0   0
+ENSMUSG00000025902  0   0   0   0
+ENSMUSG00000033845  934 1317    888 939
+ENSMUSG00000025903  705 848 647 747
+ENSMUSG00000104217  0   0   0   0
+ENSMUSG00000033813  354 436 368 442
+ENSMUSG00000002459  0   0   0   0</code></pre>
+<p>In RNAseq we typically should see reads only around feature, all reads should remain within the feature coordinates boundary. Reads should pile up on exons with clear boundaries between adjacent exons. Reads can and do map anywhere though and if reads fall outside of “normal” regions it could be an interesting case to follow up. As illustrated before visualisation is very important part of working with RNAseq data.</p>
 <p>A few things to know when visualising RNAseq data:</p>
 <ul>
 <li>use the same reference sequence that you mapped against, otherwise you might see more variance between reference genome and the data</li>
 <li>be sure to visualise against the same annotation version and vendor type. This will ensure that your features (boxes) align best with your data. This is more important then picking the same reference files as features do change coordinates from version to version. Therefore if you are using different version of annotation to which you used for read assignment for visualisation you might see too many reads outside your feature boundaries, leading to false sense that there is some biological effect going on.</li>
 <li>typically RNAseq viewers sub-sample your data for visualisation purposes. This is mainly for speed and performance of the viewer. This is especially for highly expressed genes with deep read coverage. Be aware of that when doing your exploratory analysis. Often times you can turn sub-sampling off. Once again not seeing all of the data may result in misleading observations.</li>
 </ul>
-<p>Having remind ourselves what RNAseq data</p>
-<p>After you’ve mapped reads to the reference genome you need to count number of reads that actually mapped to a feature. Feature could mean several things, it is some region of DNA that has some value/interest, a protein coding gene is a DNA region that produces a protein. For the purpose of RNAseq experiment we are most likely interested in protein coding features and therefore need to count how many of our total library mapped to features. For this step we need an annotation of the reference genome and a bam file with coordinates for every read mappings.</p>
+</div>
+<div id="details" class="section level3">
+<h3><span class="header-section-number">5.2.3</span> Details</h3>
+<p>We normally use words like “counting features” or “read assignment to features”, all means the same obtain table of counts. It is important to appreciate that “feature” could mean several things, it is some region of DNA that has some value/interest, a protein coding gene is a DNA region that produces a protein. For the purpose of RNAseq experiment we are most likely interested in protein coding features and therefore need to count those.</p>
+<p>Similar to aligners there are number of tools out there that do read counting, but the two most popular are:</p>
+<ul>
+<li><a href="https://htseq.readthedocs.io/en/release_0.10.0/index.html">htseq-count</a></li>
+<li><a href="http://subread.sourceforge.net/">featureCounts</a></li>
+</ul>
+<p>One thing to mention is that STAR aligner, mentioned previously, can actually output count files as well. In essence one can do most of RNAseq processing with STAR aligner.</p>
+<p>I’m most familiar with how <code>featureCounts</code> works and it is a versatile tool, by default it counts reads that mapped to exons, which are referred as features, and summarises at meta-feature level which by default are gene. The number that ends up in the table of counts is a sum of all of reads from exons in a give gene. Remember that if a read overlaps more then one feature, by default, it is marked as an ambiguous read and isn’t counted toward a feature. It is possible to summarise reads at exon level which opens a possibility for differential exon usage analysis from RNAseq, something that isn’t covered in this course.</p>
+<p>We are going to through more QC’s in the next section but here is nice summary image from <code>htseq-count</code> docs, to cement all possible read assignment problems.</p>
 <div class="figure"><span id="fig:unnamed-chunk-3"></span>
 <img src="figures/count_modes.png" alt="https://htseq.readthedocs.io/en/release_0.10.0/count.html"  />
 <p class="caption">
 Figure 1.1: <a href="https://htseq.readthedocs.io/en/release_0.10.0/count.html" class="uri">https://htseq.readthedocs.io/en/release_0.10.0/count.html</a>
 </p>
 </div>
-<div id="lingo-re-feature-counting" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Lingo re feature counting</h3>
+<p>The final step in RNAseq analysis is to take table of counts and apply statistical modeling to study differential expressions of genes. This will be covered in later sections.</p>
+</div>
+</div>
+<div id="summary-1" class="section level2">
+<h2><span class="header-section-number">5.3</span> Summary</h2>
 <ul>
-<li>feature</li>
-<li>intragenic/interegenic regions</li>
+<li>RNAseq analysis is a relative measure of reads between samples.</li>
+<li>step one in RNAseq analysis is to get bam files</li>
+<li>step two in RNAseq analysis is to get table of counts.</li>
+<li>step three in RNAseq analysis do differential expression</li>
+</ul>
+<blockquote>
+<p>Question: What is the correct order for an alignment based RNAseq workflow?</p>
+</blockquote>
+<ul>
+<li>differential expression, mapping, read counting</li>
+<li>read counting, mapping, differential expression</li>
+<li>mapping, read counting, differential expression</li>
+<li>differential expression, read counting, mapping</li>
 </ul>
 
-</div>
 </div>
 </div>
             </section>
