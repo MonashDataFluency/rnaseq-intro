@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="bioinformatics-file-formats.html">
+<link rel="prev" href="rnaseq-bioinformatics-workflow.html">
+<link rel="next" href="all-about-rnaseq.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -117,114 +117,43 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="genomics" class="section level1">
-<h1><span class="header-section-number">1</span> Genomics</h1>
-<p>Genome is a collection of all genetic material in the organism. To be more accurate each cell in our body contains a copy of entire genome. The study of genomics is all things to do with genome including gene expression, methylation profiles, transcriptional factor binding, chromatic arrangements and three dimensional structure of chromosomes and many more things.</p>
-<p>In this course we are going to focus on one particular technique of genomics - RNA sequencing or RNAseq for short. This is a study of primarily but not limited to gene expression. Other common application of RNAseq are study of splicing and isoforms.</p>
-<p>In genomics everything rotates around sequence information, let’s look into biological sequence next.</p>
-<div id="sequence" class="section level2">
-<h2><span class="header-section-number">1.1</span> Sequence</h2>
-<p>A sequence is a generic name describing the order of biological letters in molecules like DNA, RNA or piptide and protein. In the case of DNA and RNA letters mean nucleotide bases, <strong>A</strong>denine, <strong>T</strong>hymine, <strong>C</strong>ytosine <strong>G</strong>uanine or ATCG for short. Also know that mRNA contains <strong>U</strong>racil instead of Thymine. This would be one way to represent all five possible bases <code>A[T|U]CG</code> In the case of piptide/protein molecules each letter means amino acid type, I won’t list discuss proteins any further in this book since it isn’t a focus on this book.</p>
-<p>Note that there is a greater nomenclature exists to cover all possible variances</p>
-<pre><code>##    Letter_code      Base_name
-## 1            A        Adenine
-## 2            C       Cytosine
-## 3            G        Guanine
-## 4          T|U Thymine|Uracil
-## 5            R            A|G
-## 6            Y            C|T
-## 7            S            G|C
-## 8            W            A|T
-## 9            K            G|T
-## 10           M            A|C
-## 11           B          C|G|T
-## 12           D          A|G|T
-## 13           H          A|C|T
-## 14           V          A|C|G
-## 15           N       any base</code></pre>
-<p>The reason we have sequence information of any kind is because someone somewhere made an afford to sequence some part of the molecule. In the case of whole genome sequencing an afford was made to sequence the entire genome, for human the entire genome is 3 billion bases long. However this is a sum of all bases across all chromosomes, but chromosomes are not all equal, below is a sequence lenght of each chromosome.</p>
-<pre><code>##    Chrom    Length
-## 1      1 248956422
-## 2      2 242193529
-## 3      3 198295559
-## 4      4 190214555
-## 5      5 181538259
-## 6      6 170805979
-## 7      7 159345973
-## 8      8 145138636
-## 9      9 138394717
-## 10    10 133797422
-## 11    11 135086622
-## 12    12 133275309
-## 13    13 114364328
-## 14    14 107043718
-## 15    15 101991189
-## 16    16  90338345
-## 17    17  83257441
-## 18    18  80373285
-## 19    19  58617616
-## 20    20  64444167
-## 21    21  46709983
-## 22    22  50818468
-## 23     X 156040895
-## 24     Y  57227415
-## 25    MT     16569</code></pre>
-<p>While sequence is a generic name and often times it needs some context around it, for example DNA sequence, RNA sequence or chromosome 3 sequence. There are other names like contig and a read, which are both sequences too, they mean more specific thing. In general both mean shorter sequence, where contig almost always should be longer then a read.</p>
-<p>Let’s talk about a read sequence next.</p>
-</div>
-<div id="read-sequence" class="section level2">
-<h2><span class="header-section-number">1.2</span> Read sequence</h2>
-<p>A read is product of a machine read out that takes some biological material i.e DNA or RNA sample and produces number of reads that resembles what you’ve put into the machine. There have been a few iteration of sequencing technologies, each iteration brings about higher yield (more reads) and longer reads. Current players in the genomics space are:</p>
-<p><strong>Short read technologies</strong></p>
+<div id="qc" class="section level1">
+<h1><span class="header-section-number">6</span> QC</h1>
+<div id="number-of-mapped-reads" class="section level2">
+<h2><span class="header-section-number">6.1</span> Number of mapped reads</h2>
+<p>Different mapping types:</p>
 <ul>
-<li><p><a href="https://www.illumina.com/">Illumina</a></p>
-<ul>
-<li>MiSeq</li>
-<li>HiSeq</li>
-<li>NextSeq</li>
-<li>NovaSeq</li>
-</ul></li>
-<li><p><a href="https://www.bgi.com/global/resources/sequencing-platforms/">BGI platforms</a></p>
-<ul>
-<li>BGISEQ-50</li>
-<li>BGISEQ-500</li>
-</ul></li>
-<li><p><a href="https://www.thermofisher.com/au/en/home/brands/ion-torrent.html">Ion Torrent</a></p></li>
+<li>Uniquely mapped (255)</li>
+<li>Mapped to multiple location a.k.a multi-mapper</li>
+<li>Mapped to too many loci - discarded</li>
 </ul>
-<p><strong>Medium to long read technologies</strong></p>
+</div>
+<div id="number-of-assigned-reads" class="section level2">
+<h2><span class="header-section-number">6.2</span> Number of assigned reads</h2>
 <ul>
-<li><p><a href="https://www.pacb.com/">PacBio</a></p>
-<ul>
-<li>Sequel System</li>
-</ul></li>
-<li><p><a href="https://nanoporetech.com/">Oxford Nanopore</a></p>
-<ul>
-<li>MinION</li>
-<li>GridION</li>
-<li>PromethION</li>
-</ul></li>
+<li>Unassigned Unmapped: reads are reported as unmapped in SAM/BAM input. Note that if the ‘–primary’ option of featureCounts program is specified, the read marked as</li>
+<li>primary alignment will be considered for assigning to features.</li>
+<li>Unassigned MappingQuality: mapping quality scores lower than the specified threshold.</li>
+<li>Unassigned Chimera: two reads from the same pair are mapped to different chromosomes or have incorrect orientation.</li>
+<li>Unassigned FragementLength: length of fragment does not satisfy the criteria.</li>
+<li>Unassigned Duplicate: reads marked as duplicate in the FLAG field in SAM/BAM input.</li>
+<li>Unassigned MultiMapping: reads marked as multi-mapping in SAM/BAM input (the ‘NH’ tag is checked by the program).</li>
+<li>Unassigned Secondary: reads marked as second alignment in the FLAG field in SAM/BAM input.</li>
+<li>Unassigned Nonjunction: reads that do not span exons will not be assigned if the ‘–countSplitAlignmentsOnly’ option is specified.</li>
+<li>Unassigned NoFeatures: not overlapping with any features included in the annotation.</li>
+<li>Unassigned Overlapping Length: no features/meta-features were found to have the minimum required overlap length.</li>
+<li>Unassigned Ambiguity: overlapping with two or more features (feature-level summarization) or meta-features (meta-feature-level) summarization.</li>
 </ul>
-<p>All of the above technologies will one way or another result in digital reads. As name implies short reads are typically 50-300 bases, whereas long reads can range from 1k to 10k or more. Usually the quantity and the length of the read are inversely proportional, however the throughput of a short reads technology at the moment is vastly greater then the long read and it doesn’t suffer from the coverage issue. In terms of number of reads we are talking about millions to billions for short reads technology and in the range of 1 to 4 millions for long reads. This is a good plot showing nanopore output, which illustrates quantity vs length nicely.</p>
-<div class="figure" style="text-align: left"><span id="fig:unnamed-chunk-3"></span>
-<img src="figures/nanopore_reads_length.png" alt="https://bioinformatics.stackexchange.com/questions/3623/how-many-reads-has-my-sequencing-run-produced-on-minion" width="100%" />
-<p class="caption">
-Figure 1.1: <a href="https://bioinformatics.stackexchange.com/questions/3623/how-many-reads-has-my-sequencing-run-produced-on-minion" class="uri">https://bioinformatics.stackexchange.com/questions/3623/how-many-reads-has-my-sequencing-run-produced-on-minion</a>
-</p>
 </div>
-<p>Getting the reads is just a first step. You have to do something with your reads. The two path one can take are really assemble your reads into contigs and further into full genome or map your reads to an existing reference genome. In this course we’ll be taking the later path - mapping our RNAseq reads to an existing reference genome. But let me just talk a little more about what a contig sequence is next.</p>
+<div id="intragenic-vs-intergenic-region" class="section level2">
+<h2><span class="header-section-number">6.3</span> Intragenic vs Intergenic region</h2>
 </div>
-<div id="contig-sequence" class="section level2">
-<h2><span class="header-section-number">1.3</span> Contig sequence</h2>
-<p>Contig has specific meaning in genome assembly. It is a larger fragment assembled from short (100-300 bp) reads that hasn’t yet been merged into chromosome. However often times this term can be loosely used to mean any long stretch of sequence. I often (incorrectly) refer to chromosomes as different contigs in the FASTA file. With long read technologies advancing pretty rapidly it breaks conventional definitions of a read and contig, where a single read can be longer then a contig. However assembling two long reads would still result in a contig sequence. So once again it is important to give more context when using this term.</p>
+<div id="reads-mapping-bias" class="section level2">
+<h2><span class="header-section-number">6.4</span> Reads mapping bias</h2>
+<p>If the RNA wasn’t carefully treated and became fragmented then you are more likely to see 3 prime bias for reads mapping</p>
 </div>
-<div id="summary" class="section level2">
-<h2><span class="header-section-number">1.4</span> Summary</h2>
-<ul>
-<li><strong>Genomics</strong> is all things genome that rotates around genomic sequence</li>
-<li><strong>Sequence</strong> is an ordered collection of nucleotide bases</li>
-<li><strong>Read</strong> is an output from a sequencing machine that covered biological sample in digital sequence</li>
-<li><strong>RNAseq</strong> focuses on gene expression and splicing isoforms</li>
-</ul>
+<div id="insert-size-distribution" class="section level2">
+<h2><span class="header-section-number">6.5</span> Insert size distribution</h2>
 
 </div>
 </div>
@@ -233,8 +162,8 @@ Figure 1.1: <a href="https://bioinformatics.stackexchange.com/questions/3623/how
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bioinformatics-file-formats.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="rnaseq-bioinformatics-workflow.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="all-about-rnaseq.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="bioinformatics-file-formats.html">
+<link rel="prev" href="reference-sequence.html">
+<link rel="next" href="rnaseq-bioinformatics-workflow.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -117,114 +117,155 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="genomics" class="section level1">
-<h1><span class="header-section-number">1</span> Genomics</h1>
-<p>Genome is a collection of all genetic material in the organism. To be more accurate each cell in our body contains a copy of entire genome. The study of genomics is all things to do with genome including gene expression, methylation profiles, transcriptional factor binding, chromatic arrangements and three dimensional structure of chromosomes and many more things.</p>
-<p>In this course we are going to focus on one particular technique of genomics - RNA sequencing or RNAseq for short. This is a study of primarily but not limited to gene expression. Other common application of RNAseq are study of splicing and isoforms.</p>
-<p>In genomics everything rotates around sequence information, let’s look into biological sequence next.</p>
-<div id="sequence" class="section level2">
-<h2><span class="header-section-number">1.1</span> Sequence</h2>
-<p>A sequence is a generic name describing the order of biological letters in molecules like DNA, RNA or piptide and protein. In the case of DNA and RNA letters mean nucleotide bases, <strong>A</strong>denine, <strong>T</strong>hymine, <strong>C</strong>ytosine <strong>G</strong>uanine or ATCG for short. Also know that mRNA contains <strong>U</strong>racil instead of Thymine. This would be one way to represent all five possible bases <code>A[T|U]CG</code> In the case of piptide/protein molecules each letter means amino acid type, I won’t list discuss proteins any further in this book since it isn’t a focus on this book.</p>
-<p>Note that there is a greater nomenclature exists to cover all possible variances</p>
-<pre><code>##    Letter_code      Base_name
-## 1            A        Adenine
-## 2            C       Cytosine
-## 3            G        Guanine
-## 4          T|U Thymine|Uracil
-## 5            R            A|G
-## 6            Y            C|T
-## 7            S            G|C
-## 8            W            A|T
-## 9            K            G|T
-## 10           M            A|C
-## 11           B          C|G|T
-## 12           D          A|G|T
-## 13           H          A|C|T
-## 14           V          A|C|G
-## 15           N       any base</code></pre>
-<p>The reason we have sequence information of any kind is because someone somewhere made an afford to sequence some part of the molecule. In the case of whole genome sequencing an afford was made to sequence the entire genome, for human the entire genome is 3 billion bases long. However this is a sum of all bases across all chromosomes, but chromosomes are not all equal, below is a sequence lenght of each chromosome.</p>
-<pre><code>##    Chrom    Length
-## 1      1 248956422
-## 2      2 242193529
-## 3      3 198295559
-## 4      4 190214555
-## 5      5 181538259
-## 6      6 170805979
-## 7      7 159345973
-## 8      8 145138636
-## 9      9 138394717
-## 10    10 133797422
-## 11    11 135086622
-## 12    12 133275309
-## 13    13 114364328
-## 14    14 107043718
-## 15    15 101991189
-## 16    16  90338345
-## 17    17  83257441
-## 18    18  80373285
-## 19    19  58617616
-## 20    20  64444167
-## 21    21  46709983
-## 22    22  50818468
-## 23     X 156040895
-## 24     Y  57227415
-## 25    MT     16569</code></pre>
-<p>While sequence is a generic name and often times it needs some context around it, for example DNA sequence, RNA sequence or chromosome 3 sequence. There are other names like contig and a read, which are both sequences too, they mean more specific thing. In general both mean shorter sequence, where contig almost always should be longer then a read.</p>
-<p>Let’s talk about a read sequence next.</p>
+<div id="raw-data" class="section level1">
+<h1><span class="header-section-number">4</span> Raw data</h1>
+<div id="fastq" class="section level2">
+<h2><span class="header-section-number">4.1</span> FASTQ</h2>
+<p>This is a very important file(s) you don’t mess directly with FASTQ files. Best not to every unzip those either. If think that you need to do some thing fastq files in terms of editing or some other out of ordinary manipulations. Make a copy and work on the copy. If you modify, corrupt or loose your FASTQ files, days, month or year of wet-lab work go down a toilet, let a lone large sum of money spend on RNA extraction, library preparation and sequencing.</p>
+<p>Your reads come in the form of FASTQ files. By far the most dominant way of organising your FASTQ files one per sample. For example if your experiment is a straightforward <code>TP53</code> knock-out in mice. You’ll need bear minimum 4 mice, best to get 6, this is 3 control and 3 tp53 knock-outs. This is way you have three replicates to account for mouse to mouse variability and have a better chance of estimating actual difference due to knock-out.</p>
+<p>You should receive these files from sequencing facility:</p>
+<pre><code>cntr_rep1_R1.fastq.gz
+cntr_rep2_R1.fastq.gz
+cntr_rep3_R1.fastq.gz
+
+tp53_ko_rep1_R1.fastq.gz
+tp53_ko_rep2_R1.fastq.gz
+tp53_ko_rep3_R1.fastq.gz</code></pre>
+<p>The naming of the files is completely up to you. Sequencing facility doesn’t care about the names, as long as you give them 6 different microtubes with some unique naming on the lid, but remember that giving clear names simplifies the matter. Bioinformatician might be able to infer from FASTQ file names what the experiment was.</p>
+<blockquote>
+<p>Question1: How many FASTQ files do you expect in a single-end experiment with 6 samples?</p>
+</blockquote>
+<p>Remember that if you decided to sequence from both ends of the reads i.e paired-end sequencing, you’ll give FASTQ file for each sample for each end. You should expect double the number of samples. It is important to have exactly double the number of files, because downstream analysis will rely on those files and will break if not supplied.</p>
+<pre><code>cntr_rep1_R1.fastq.gz 
+cntr_rep1_R2.fastq.gz
+
+cntr_rep2_R1.fastq.gz
+cntr_rep2_R2.fastq.gz
+
+cntr_rep3_R1.fastq.gz
+cntr_rep3_R2.fastq.gz
+
+tp53_ko_rep1_R1.fastq.gz
+tp53_ko_rep1_R2.fastq.gz
+
+tp53_ko_rep2_R1.fastq.gz
+tp53_ko_rep2_R2.fastq.gz
+
+tp53_ko_rep3_R1.fastq.gz
+tp53_ko_rep3_R2.fastq.gz</code></pre>
+<blockquote>
+<p>Question2: How many FASTQ files do you expect in a paired-end experiment with 6 samples?</p>
+</blockquote>
+<p>One other thing that you should be aware is that sometimes to get extra deep sequencing your individual samples can be split across different lanes on the sequencing instrument (mainly talking about Illumina instruments here). This might seem confusing but you will need to multiple your samples by number of lanes. If you have single-end data of 6 sample that were split across 2 lanes then you are going to end up with 12 FASTQ files.</p>
+<pre><code>cntr_rep1_R1_L001.fastq.gz
+cntr_rep1_R1_L002.fastq.gz
+
+cntr_rep2_R1_L001.fastq.gz
+cntr_rep2_R1_L002.fastq.gz
+
+cntr_rep3_R1_L001.fastq.gz
+cntr_rep3_R1_L002.fastq.gz
+
+tp53_ko_rep1_R1_L001.fastq.gz
+tp53_ko_rep1_R1_L002.fastq.gz
+
+tp53_ko_rep2_R1_L001.fastq.gz
+tp53_ko_rep2_R1_L002.fastq.gz
+
+tp53_ko_rep3_R1_L001.fastq.gz
+tp53_ko_rep3_R1_L002.fastq.gz</code></pre>
+<p>If your samples have been split across 3 lanes you are going to have 18 FASTQ files.</p>
+<pre><code>cntr_rep1_R1_L001.fastq.gz       -
+cntr_rep1_R1_L002.fastq.gz       | cntr_rep1
+cntr_rep1_R1_L003.fastq.gz       -
+
+cntr_rep2_R1_L001.fastq.gz       -
+cntr_rep2_R1_L002.fastq.gz       | cntr_rep2
+cntr_rep2_R1_L003.fastq.gz       -
+
+cntr_rep3_R1_L001.fastq.gz       -
+cntr_rep3_R1_L002.fastq.gz       | cntr_rep2
+cntr_rep2_R1_L003.fastq.gz       -
+
+tp53_ko_rep1_R1_L001.fastq.gz    -
+tp53_ko_rep1_R1_L002.fastq.gz    | tp53_ko_rep1
+tp53_ko_rep1_R1_L003.fastq.gz    -
+
+tp53_ko_rep2_R1_L001.fastq.gz    -
+tp53_ko_rep2_R1_L002.fastq.gz    | tp53_ko_rep2
+tp53_ko_rep2_R1_L003.fastq.gz    -
+
+tp53_ko_rep3_R1_L001.fastq.gz    -
+tp53_ko_rep3_R1_L002.fastq.gz    | tp53_ko_rep3
+tp53_ko_rep3_R1_L003.fastq.gz    -</code></pre>
+<p>Note that when samples are split across lanes they become technical replicates and they are typically merged into single file. Also note that if you instead had paired end data you will have to further multiple by 2 to get total number of FASTQ file.</p>
+<pre><code>cntr_rep1_R1_L001.fastq.gz      -
+cntr_rep1_R2_L001.fastq.gz      |
+                                |
+cntr_rep1_R1_L002.fastq.gz      | cntr_rep1
+cntr_rep1_R2_L002.fastq.gz      |
+                                |
+cntr_rep1_R1_L003.fastq.gz      |
+cntr_rep1_R2_L003.fastq.gz      -
+
+cntr_rep2_R1_L001.fastq.gz      -
+cntr_rep2_R2_L001.fastq.gz      |
+                                |
+cntr_rep2_R1_L002.fastq.gz      | cntr_rep2
+cntr_rep2_R2_L002.fastq.gz      |
+                                |
+cntr_rep2_R1_L003.fastq.gz      |
+cntr_rep2_R2_L003.fastq.gz      -
+
+cntr_rep3_R1_L001.fastq.gz      -
+cntr_rep3_R2_L001.fastq.gz      |
+                                |
+cntr_rep3_R1_L002.fastq.gz      | cntr_rep2
+cntr_rep3_R2_L002.fastq.gz      |
+                                |
+cntr_rep2_R1_L003.fastq.gz      |
+cntr_rep2_R2_L003.fastq.gz      -
+
+tp53_ko_rep1_R1_L001.fastq.gz   -
+tp53_ko_rep1_R2_L001.fastq.gz   |
+                                |
+tp53_ko_rep1_R1_L002.fastq.gz   | tp53_ko_rep1
+tp53_ko_rep1_R2_L002.fastq.gz   |
+                                |
+tp53_ko_rep1_R1_L003.fastq.gz   |
+tp53_ko_rep1_R2_L003.fastq.gz   -
+
+tp53_ko_rep2_R1_L001.fastq.gz   -
+tp53_ko_rep2_R2_L001.fastq.gz   |
+                                |
+tp53_ko_rep2_R1_L002.fastq.gz   | tp53_ko_rep2
+tp53_ko_rep2_R2_L002.fastq.gz   |
+                                |
+tp53_ko_rep2_R1_L003.fastq.gz   |
+tp53_ko_rep2_R2_L003.fastq.gz   -
+
+tp53_ko_rep3_R1_L001.fastq.gz   -
+tp53_ko_rep3_R2_L001.fastq.gz   |
+                                |
+tp53_ko_rep3_R1_L002.fastq.gz   | tp53_ko_rep3
+tp53_ko_rep3_R2_L002.fastq.gz   |
+                                |
+tp53_ko_rep3_R1_L003.fastq.gz   |
+tp53_ko_rep3_R2_L003.fastq.gz   -</code></pre>
 </div>
-<div id="read-sequence" class="section level2">
-<h2><span class="header-section-number">1.2</span> Read sequence</h2>
-<p>A read is product of a machine read out that takes some biological material i.e DNA or RNA sample and produces number of reads that resembles what you’ve put into the machine. There have been a few iteration of sequencing technologies, each iteration brings about higher yield (more reads) and longer reads. Current players in the genomics space are:</p>
-<p><strong>Short read technologies</strong></p>
+<div id="unix-tooling" class="section level2">
+<h2><span class="header-section-number">4.2</span> Unix tooling</h2>
+<p>There are many different biology / bioinformatics related file formats. You will naturally come across different files formats. It doesn’t matter so much what they are called, i.e what they file extension is, rather what they hold.</p>
+<p>Essentially all bioinformatics files are either plain text (a.k.a ASCII) or binary. Plain text files are “easy” to interface with. Unix/Linux command line provide many great tools that can work with plain text files. To list a few popular and powerful command line tools:</p>
 <ul>
-<li><p><a href="https://www.illumina.com/">Illumina</a></p>
-<ul>
-<li>MiSeq</li>
-<li>HiSeq</li>
-<li>NextSeq</li>
-<li>NovaSeq</li>
-</ul></li>
-<li><p><a href="https://www.bgi.com/global/resources/sequencing-platforms/">BGI platforms</a></p>
-<ul>
-<li>BGISEQ-50</li>
-<li>BGISEQ-500</li>
-</ul></li>
-<li><p><a href="https://www.thermofisher.com/au/en/home/brands/ion-torrent.html">Ion Torrent</a></p></li>
+<li><code>grep</code> search for a pattern</li>
+<li><code>sed</code> search and replace</li>
+<li><code>awk</code> search and replace and more</li>
+<li><code>cat</code> look inside</li>
+<li><code>cut</code> what the knife would do to bread</li>
 </ul>
-<p><strong>Medium to long read technologies</strong></p>
-<ul>
-<li><p><a href="https://www.pacb.com/">PacBio</a></p>
-<ul>
-<li>Sequel System</li>
-</ul></li>
-<li><p><a href="https://nanoporetech.com/">Oxford Nanopore</a></p>
-<ul>
-<li>MinION</li>
-<li>GridION</li>
-<li>PromethION</li>
-</ul></li>
-</ul>
-<p>All of the above technologies will one way or another result in digital reads. As name implies short reads are typically 50-300 bases, whereas long reads can range from 1k to 10k or more. Usually the quantity and the length of the read are inversely proportional, however the throughput of a short reads technology at the moment is vastly greater then the long read and it doesn’t suffer from the coverage issue. In terms of number of reads we are talking about millions to billions for short reads technology and in the range of 1 to 4 millions for long reads. This is a good plot showing nanopore output, which illustrates quantity vs length nicely.</p>
-<div class="figure" style="text-align: left"><span id="fig:unnamed-chunk-3"></span>
-<img src="figures/nanopore_reads_length.png" alt="https://bioinformatics.stackexchange.com/questions/3623/how-many-reads-has-my-sequencing-run-produced-on-minion" width="100%" />
-<p class="caption">
-Figure 1.1: <a href="https://bioinformatics.stackexchange.com/questions/3623/how-many-reads-has-my-sequencing-run-produced-on-minion" class="uri">https://bioinformatics.stackexchange.com/questions/3623/how-many-reads-has-my-sequencing-run-produced-on-minion</a>
-</p>
-</div>
-<p>Getting the reads is just a first step. You have to do something with your reads. The two path one can take are really assemble your reads into contigs and further into full genome or map your reads to an existing reference genome. In this course we’ll be taking the later path - mapping our RNAseq reads to an existing reference genome. But let me just talk a little more about what a contig sequence is next.</p>
-</div>
-<div id="contig-sequence" class="section level2">
-<h2><span class="header-section-number">1.3</span> Contig sequence</h2>
-<p>Contig has specific meaning in genome assembly. It is a larger fragment assembled from short (100-300 bp) reads that hasn’t yet been merged into chromosome. However often times this term can be loosely used to mean any long stretch of sequence. I often (incorrectly) refer to chromosomes as different contigs in the FASTA file. With long read technologies advancing pretty rapidly it breaks conventional definitions of a read and contig, where a single read can be longer then a contig. However assembling two long reads would still result in a contig sequence. So once again it is important to give more context when using this term.</p>
-</div>
-<div id="summary" class="section level2">
-<h2><span class="header-section-number">1.4</span> Summary</h2>
-<ul>
-<li><strong>Genomics</strong> is all things genome that rotates around genomic sequence</li>
-<li><strong>Sequence</strong> is an ordered collection of nucleotide bases</li>
-<li><strong>Read</strong> is an output from a sequencing machine that covered biological sample in digital sequence</li>
-<li><strong>RNAseq</strong> focuses on gene expression and splicing isoforms</li>
-</ul>
+<p>It is out of the scope of this course to go through any of the tools or command line in general, but if you are going to do any kind of bioinformatics you’ll eventually going to come across these tools.</p>
+<p>The other file type is binary, this will requires designated tool for interfacing with the file for example SAM/BAM files have <code>samtools</code> that aid interaction with them.</p>
 
 </div>
 </div>
@@ -233,8 +274,8 @@ Figure 1.1: <a href="https://bioinformatics.stackexchange.com/questions/3623/how
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bioinformatics-file-formats.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="reference-sequence.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rnaseq-bioinformatics-workflow.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
