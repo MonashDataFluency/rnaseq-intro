@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Introduction to RNAseq</title>
+  <meta name="description" content="Introduction to RNAseq">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Introduction to RNAseq" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Introduction to RNAseq" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="raw-data.html">
+<link rel="next" href="qc.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction to RNAseq</a></li>
+<li class="chapter" data-level="1" data-path="genomics.html"><a href="genomics.html"><i class="fa fa-check"></i><b>1</b> Genomics</a><ul>
+<li class="chapter" data-level="1.1" data-path="genomics.html"><a href="genomics.html#sequence"><i class="fa fa-check"></i><b>1.1</b> Sequence</a></li>
+<li class="chapter" data-level="1.2" data-path="genomics.html"><a href="genomics.html#read-sequence"><i class="fa fa-check"></i><b>1.2</b> Read sequence</a></li>
+<li class="chapter" data-level="1.3" data-path="genomics.html"><a href="genomics.html#contig-sequence"><i class="fa fa-check"></i><b>1.3</b> Contig sequence</a></li>
+<li class="chapter" data-level="1.4" data-path="genomics.html"><a href="genomics.html#summary"><i class="fa fa-check"></i><b>1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="bioinformatics-file-formats.html"><a href="bioinformatics-file-formats.html"><i class="fa fa-check"></i><b>2</b> Bioinformatics file formats</a><ul>
+<li class="chapter" data-level="2.1" data-path="bioinformatics-file-formats.html"><a href="bioinformatics-file-formats.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="bioinformatics-file-formats.html"><a href="bioinformatics-file-formats.html#what-is-a-file-format"><i class="fa fa-check"></i><b>2.2</b> What is a file format?</a></li>
+<li class="chapter" data-level="2.3" data-path="bioinformatics-file-formats.html"><a href="bioinformatics-file-formats.html#annotation-files"><i class="fa fa-check"></i><b>2.3</b> Annotation files</a></li>
+<li class="chapter" data-level="2.4" data-path="bioinformatics-file-formats.html"><a href="bioinformatics-file-formats.html#glossary"><i class="fa fa-check"></i><b>2.4</b> Glossary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="reference-sequence.html"><a href="reference-sequence.html"><i class="fa fa-check"></i><b>3</b> Reference sequence</a><ul>
+<li class="chapter" data-level="3.1" data-path="reference-sequence.html"><a href="reference-sequence.html#fasta"><i class="fa fa-check"></i><b>3.1</b> FASTA</a></li>
+<li class="chapter" data-level="3.2" data-path="reference-sequence.html"><a href="reference-sequence.html#exercise"><i class="fa fa-check"></i><b>3.2</b> Exercise</a></li>
+<li class="chapter" data-level="3.3" data-path="reference-sequence.html"><a href="reference-sequence.html#rule-of-thumb"><i class="fa fa-check"></i><b>3.3</b> Rule of thumb</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="raw-data.html"><a href="raw-data.html"><i class="fa fa-check"></i><b>4</b> Raw data</a><ul>
+<li class="chapter" data-level="4.1" data-path="raw-data.html"><a href="raw-data.html#fastq"><i class="fa fa-check"></i><b>4.1</b> FASTQ</a></li>
+<li class="chapter" data-level="4.2" data-path="raw-data.html"><a href="raw-data.html#unix-tooling"><i class="fa fa-check"></i><b>4.2</b> Unix tooling</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html"><i class="fa fa-check"></i><b>5</b> RNAseq bioinformatics workflow</a><ul>
+<li class="chapter" data-level="5.1" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html#alignment"><i class="fa fa-check"></i><b>5.1</b> Alignment</a></li>
+<li class="chapter" data-level="5.2" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html#read-counting"><i class="fa fa-check"></i><b>5.2</b> Read counting</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="qc.html"><a href="qc.html"><i class="fa fa-check"></i><b>6</b> QC</a><ul>
+<li class="chapter" data-level="6.1" data-path="qc.html"><a href="qc.html#number-of-mapped-reads"><i class="fa fa-check"></i><b>6.1</b> Number of mapped reads</a></li>
+<li class="chapter" data-level="6.2" data-path="qc.html"><a href="qc.html#number-of-assigned-reads"><i class="fa fa-check"></i><b>6.2</b> Number of assigned reads</a></li>
+<li class="chapter" data-level="6.3" data-path="qc.html"><a href="qc.html#intragenic-vs-intergenic-region"><i class="fa fa-check"></i><b>6.3</b> Intragenic vs Intergenic region</a></li>
+<li class="chapter" data-level="6.4" data-path="qc.html"><a href="qc.html#reads-mapping-bias"><i class="fa fa-check"></i><b>6.4</b> Reads mapping bias</a></li>
+<li class="chapter" data-level="6.5" data-path="qc.html"><a href="qc.html#insert-size-distribution"><i class="fa fa-check"></i><b>6.5</b> Insert size distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html"><i class="fa fa-check"></i><b>7</b> All about RNAseq</a><ul>
+<li class="chapter" data-level="7.1" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html#general"><i class="fa fa-check"></i><b>7.1</b> General</a></li>
+<li class="chapter" data-level="7.2" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html#technology"><i class="fa fa-check"></i><b>7.2</b> Technology</a></li>
+<li class="chapter" data-level="7.3" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html#differential-expression-de"><i class="fa fa-check"></i><b>7.3</b> Differential expression (DE)</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="lesson-plan.html"><a href="lesson-plan.html"><i class="fa fa-check"></i><b>8</b> Lesson plan</a></li>
+<li class="chapter" data-level="9" data-path="meeting-notes.html"><a href="meeting-notes.html"><i class="fa fa-check"></i><b>9</b> Meeting notes</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to RNAseq</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="rnaseq-bioinformatics-workflow" class="section level1">
+<h1><span class="header-section-number">5</span> RNAseq bioinformatics workflow</h1>
+<p>Hands on bioinformatics starts from FASTQ files. You typically will get them from sequencing provider. However, as mentioned previously, everything you did in the lab before sequencing i.e RNA extraction, storage and handling as well as experimental design in general, feeds into bioinformatics analysis, so do try to record as much of that as possible and be ready to communicate this to a bioinformaticina.</p>
+<div id="alignment" class="section level2">
+<h2><span class="header-section-number">5.1</span> Alignment</h2>
+<p>Once you’ve got your raw data - FASTQ files, the first thing you will do in RNAseq analysis is to map to the reference genome. How to find and select reference genome has been discussed <a href="reference-sequence.html#reference-sequence">previously in reference sequence section</a>. Here we are starting from an alignment step. Let’s do another thought experiment; what information might you need from an aligner? A simpler question is; Once you’ve found which part of the genome a read belongs to, what information should you record?</p>
+<ul>
+<li>which chromosome each read mapped to</li>
+<li>which coordinate on that chromosome read map to</li>
+<li>some quality metric on how well it mapped, all bases mapped or just some?</li>
+</ul>
+<p>This is a bear minimum information you want your aligner to output, but there is actually a lot more information aligners typically output including was the read a multi-mapper, the orientation of read in terms of strand and position first or second, this is in the case of paired-end data. Some aligners like <a href="https://github.com/alexdobin/STAR">STAR</a> also include information about splice junctions. Also with sample and UMI barcoding there are moves to ask aligners to record that information as well.</p>
+<p>Essentially all aligners these days will produce a sequence alignment map or sam file for short. Sam file is once again is a simple plain text file with rows and columns tab separated, with a header section that is unique to a sam file. It is best practice to keep sam files zipped, but instead of conventional <code>gzip</code> utility use special for this purpose <code>samtools</code> utility and the convention is to call compressed files BAM for binary sam. An example below illustrates relatively extreme case, never the less show a massive advantage in disk space in using bam files instead of sam.</p>
+<pre><code>-rw-r--r--  1 kirill kirill  41G Aug 30 14:01 cntr_rep1_sorted_mdups.bam
+-rw-rw-r--  1 kirill kirill 399G Aug 31 11:06 cntr_rep1_sorted_mdups.sam</code></pre>
+<p>We always never store sam files on your disk. Always converted to bam files. Bam files are an industry standard, a lot of bioinformatics analysis, certainly true for RNAseq, rotates around bam files. There even some thoughts to keep raw data in bam files instead of FASTQs.</p>
+<p>One important thing you need to know about aligners is that broadly speaking there are two types, splice away aligners and splice unaware aligners. This is different from gapped alignment. Essentially any good aligners will do gapped alignment to account for insertions and deletions of few bases. However in the case of RNAseq some gaps can actually be quite large and can be few kilobases, those are the splice junctions. Below is a list of a few alingers that are commonly used in our group, but of course there are many more aligners out there.</p>
+<p>Don’t use these ones for RNAseq analysis, these ones are for DNA mapping, including data from ChipSeq and ATACseq.</p>
+<p>Common splice unaware aligners:</p>
+<ul>
+<li><code>bowtie2</code></li>
+<li><code>bwa</code></li>
+</ul>
+<p>These aligners commonly used for RNAseq analysis. You can use for ChipSeq and ATACseq as well, but best not to, unless you know what you are doing. This is mainly because these aligners will model gaps differently, since large gaps (splice junctions) are expected you might get wrong scoring of insertion and deletions in your Chip and ATAC seqs.</p>
+<p>Common splice aware aligners:</p>
+<ul>
+<li><code>tophat2</code></li>
+<li><code>hisat2</code></li>
+<li><code>STAR</code></li>
+</ul>
+<p>Let’s talk a little more about bam files, before moving on to read counting as a step two in typical RNAseq analysis.</p>
+<div id="bam-files" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Bam files</h3>
+<p>Bam files can be sorted in a couple of ways:</p>
+<ul>
+<li>by coordinate (4th column): arrange reads from first base till last base on each chromosome. Remember that chromosomes themselves may not be sorted by name or length</li>
+<li>by name (1st column): arrange reads alphabetically on each chromosome. Remember each read in a FASTQ file has a unique name (yes all 20 million or more reads).</li>
+</ul>
+<p>The reason for name sorting is to place R1 and R2 reads next to each other (one after another), this mainly applicable for paired-end sequencing. I can’t see any effect sorting by name single-end data, this will make it as random as not sorting at all. Sorting by coordinates is a dominant way of sorting bam files, big advantage of sorting by coordinates is ability to for quick lookup of any region with in the bam. You will need index bam files.</p>
+<p>Remember that you should end up with one bam file per sample and typically each bam will be also sorted. You don’t need both copies of sorted and unsorted bam files. Both contain the same information. Sorted bam files will result in slightly reduced bam file sizes, this is because sorted bam files will give slightly better compression.</p>
+<pre><code>cntr_rep1_R1.fastq.gz   cntr_rep1.bam   cntr_rep1_sorted.bam
+cntr_rep2_R1.fastq.gz   cntr_rep2.bam   cntr_rep2_sorted.bam
+cntr_rep3_R1.fastq.gz   cntr_rep3.bam   cntr_rep3_sorted.bam
+
+tp53_ko_rep1_R1.fastq.gz    tp53_ko_rep1.bam    tp53_ko_rep1_sorted.bam
+tp53_ko_rep2_R1.fastq.gz    tp53_ko_rep2.bam    tp53_ko_rep2_sorted.bam
+tp53_ko_rep3_R1.fastq.gz    tp53_ko_rep3.bam    tp53_ko_rep3_sorted.bam</code></pre>
+</div>
+</div>
+<div id="read-counting" class="section level2">
+<h2><span class="header-section-number">5.2</span> Read counting</h2>
+<p>Let’s remind ourselves what an RNAseq data looks like if we visualise it. There are number of different</p>
+<div class="figure"><span id="fig:unnamed-chunk-1"></span>
+<img src="figures/igv_plot.jpg" alt="[RNAseq data visualisation (follow a link for reference)](https://secure.clcbio.com/helpspot/index.php?pg=kb.page&amp;id=380)"  />
+<p class="caption">
+Figure 5.1: <a href="https://secure.clcbio.com/helpspot/index.php?pg=kb.page&amp;id=380">RNAseq data visualisation (follow a link for reference)</a>
+</p>
+</div>
+<p><img src="figures/rnaseq2.png" /><!-- --></p>
+<p>We typically should see reads only around feature, all reads should remain within the feature coordinates boundary. Reads should pile up on exons with clear boundaries between adjacent exons. Reads can and do map anywhere though and then reads fall outside of “normal” regions it could be an interesting case to follow up. It does by in large starts with some visualisation, which often can be rather manual.</p>
+<p>A few things to know when visualising RNAseq data:</p>
+<ul>
+<li>use the same reference sequence that you mapped against, otherwise you might see more variance between reference genome and the data</li>
+<li>be sure to visualise against the same annotation version and vendor type. This will ensure that your features (boxes) align best with your data. This is more important then picking the same reference files as features do change coordinates from version to version. Therefore if you are using different version of annotation to which you used for read assignment for visualisation you might see too many reads outside your feature boundaries, leading to false sense that there is some biological effect going on.</li>
+<li>typically RNAseq viewers sub-sample your data for visualisation purposes. This is mainly for speed and performance of the viewer. This is especially for highly expressed genes with deep read coverage. Be aware of that when doing your exploratory analysis. Often times you can turn sub-sampling off. Once again not seeing all of the data may result in misleading observations.</li>
+</ul>
+<p>Having remind ourselves what RNAseq data</p>
+<p>After you’ve mapped reads to the reference genome you need to count number of reads that actually mapped to a feature. Feature could mean several things, it is some region of DNA that has some value/interest, a protein coding gene is a DNA region that produces a protein. For the purpose of RNAseq experiment we are most likely interested in protein coding features and therefore need to count how many of our total library mapped to features. For this step we need an annotation of the reference genome and a bam file with coordinates for every read mappings.</p>
+<div class="figure"><span id="fig:unnamed-chunk-3"></span>
+<img src="figures/count_modes.png" alt="https://htseq.readthedocs.io/en/release_0.10.0/count.html"  />
+<p class="caption">
+Figure 1.1: <a href="https://htseq.readthedocs.io/en/release_0.10.0/count.html" class="uri">https://htseq.readthedocs.io/en/release_0.10.0/count.html</a>
+</p>
+</div>
+<div id="lingo-re-feature-counting" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Lingo re feature counting</h3>
+<ul>
+<li>feature</li>
+<li>intragenic/interegenic regions</li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="raw-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="qc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["rnaseq-intro.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
