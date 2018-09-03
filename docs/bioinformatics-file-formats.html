@@ -85,6 +85,7 @@
 <li class="chapter" data-level="5" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html"><i class="fa fa-check"></i><b>5</b> RNAseq bioinformatics workflow</a><ul>
 <li class="chapter" data-level="5.1" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html#alignment"><i class="fa fa-check"></i><b>5.1</b> Alignment</a></li>
 <li class="chapter" data-level="5.2" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html#read-counting"><i class="fa fa-check"></i><b>5.2</b> Read counting</a></li>
+<li class="chapter" data-level="5.3" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html#summary-1"><i class="fa fa-check"></i><b>5.3</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="qc.html"><a href="qc.html"><i class="fa fa-check"></i><b>6</b> QC</a><ul>
 <li class="chapter" data-level="6.1" data-path="qc.html"><a href="qc.html#number-of-mapped-reads"><i class="fa fa-check"></i><b>6.1</b> Number of mapped reads</a></li>
@@ -134,7 +135,7 @@
 <div id="what-is-a-file-format" class="section level2">
 <h2><span class="header-section-number">2.2</span> What is a file format?</h2>
 <p>The file format at it simplest defines structure with in the file. By far the most common structure of the plain text file is tabular. The spreadsheet that everyone is so familiar with is simply a plain text file with rows and columns, where each cell separated by a “special” character called <code>tabular</code> or <code>tab</code> for short, which makes tab separated variables file or tsv for short with a sister file of comma separated variables or csv for short where instead of <code>tab</code> character comma is used.</p>
-<p><strong>Comma Separated Variables (csv)</strong></p>
+<p><strong>Tab Separated Variables (tsv)</strong></p>
 <pre><code>Gene.ID Chrom   Gene.Name   Biotype KO3_S3  KO4_S4  WT1_S1  WT2_S2
 ENSMUSG00000051951  1   Xkr4    protein_coding  0   0   0   0
 ENSMUSG00000025900  1   Rp1 protein_coding  0   0   0   0
@@ -145,7 +146,7 @@ ENSMUSG00000025903  1   Lypla1  protein_coding  705 848 647 747
 ENSMUSG00000104217  1   Gm37988 protein_coding  0   0   0   0
 ENSMUSG00000033813  1   Tcea1   protein_coding  354 436 368 442
 ENSMUSG00000002459  1   Rgs20   protein_coding  0   0   0   0</code></pre>
-<p><strong>Tab Separated Variables (tsv)</strong></p>
+<p><strong>Comma Separated Variables (csv)</strong></p>
 <pre><code>Gene.ID,Chrom,Gene.Name,Biotype,KO3_S3,KO4_S4,WT1_S1,WT2_S2
 ENSMUSG00000051951,1,Xkr4,protein_coding,0,0,0,0
 ENSMUSG00000025900,1,Rp1,protein_coding,0,0,0,0
