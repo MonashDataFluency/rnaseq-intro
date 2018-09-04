@@ -1,5 +1,9 @@
 # Raw data
 
+## Introduction
+
+The raw data comes from a sequencing instrument, Illumina instruments appears to dominate short-read sequencing described earlier. 
+
 ## FASTQ
 
 This is a very important file(s) you don't mess directly with FASTQ files. Best not to every unzip those either. If think that you need to do some thing fastq files in terms of editing or some other out of ordinary manipulations. Make a copy and work on the copy. If you modify, corrupt or loose your FASTQ files, days, month or year of wet-lab work go down a toilet, let a lone large sum of money spend on RNA extraction, library preparation and sequencing.
