@@ -4,10 +4,10 @@ rmd_files:
   - genomics.Rmd
   - file_formats.Rmd
   - refseq.Rmd
+  - annotation.Rmd
   - raw_data.Rmd
   - rnaseq.Rmd
   - qc.Rmd
-    #- annotation.Rmd
   - other.Rmd
 
 new_session: yes
