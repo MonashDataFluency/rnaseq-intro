@@ -61,6 +61,28 @@ For STAR there are five categories of reads:
 
 Remember discussion about soft-clipping reads from previous section. If the read had been soft-clipped beyond the threshold then it'll be marked as too short and discarded. Going back to troubleshooting of unmapped reads if you are getting large proportion of reads that are too short, then despite what being said in the trimming section it is worth while trying to adapter and quality trim before mapping. Perhaps your library has high adapter content.
 
+### Details
+
+There is a slight variation in how different tools count and interpret mapped reads. In terms of terminology there are three important concepts one need to understand:
+
+- library size / total number of reads
+- primary and secondary alignments
+- supplementary alignment
+
+Library size in this context means total number of reads in the FASTQ files, this is typically in order of millions of reads, 20 million reads per sample seems to be used as a rule of thumb for RNAseq analysis, but that number can be anywhere between 5 and 80 millions per sample. Remember from previous section that we are trying to map all reads from FASTQ to the reference. Therefore you expect to find all 20 million in your bam file. Bam file holds one alignment per line and remember that reads can have multiple alignments, there fore one read could occupy multiple lines. If the read maps to multiple location one of those location will be marked as primary (a.k.a primary alignment) all other will be marked as secondary. It is outside of the scope of this book how primary alignment gets picked, sometimes this is rather random process. Supplementary alignment on the other hand marking a read that has chimeric alignment such mapping between two chromosomes or an inversion of some kind.
+A uniquely mapped reads are the ones that actually going to make into differential analysis those are the read that have been marked as primary but also carry mapq of 255.
+
+This command will give you the number of uniquely mapped reads that are good for differential expression
+
+```
+samtools view -c -F 256 -q 255 ctrl_rep1_sorted_mdups.bam
+```
+
+To actually get number of reads that mapped to the reference one need to keep track of number of unmapped reads as well and output them to bam, this is usually default behaviour. If you see 100% mapping rate I would suspect first thing that you didn't output unmapped reads into bam file
+
+
+Also note that for paired end library total number of reads is double to what it is in the fastq file, because there is two fastq files R1 and R2. While STARs interpretation of reads isn't strictly correct it is actually the correct number of fragments that you need to consider for differential analysis.
+
 ## Number of assigned reads
 
 The second most important metric that you should look at is number of reads assigned to a feature. `featureCounts` provides nice summary metrics about read assignment. Remember just because your reads have mapped to the reference genome it doesn't mean your reads came from protein coding reads. We would like to see as many reads assigned as possible and once again there isn't hard threshold that one can apply to see if read assignment was "good" or "bad". Think about biology and what it means in the context of your experimental design.
@@ -83,8 +105,14 @@ These metrics are for future reference only and are not discussed any further in
 - Unassigned Nonjunction: reads that do not span exons will not be assigned if the ‘--countSplitAlignmentsOnly’ option is specified.
 - Unassigned Overlapping Length: no features/meta-features were found to have the minimum required overlap length.
 
-No feature reads depending on the study would be one of the most interesting "can of worms". Together with other metrics no feature can suggest DNA contamination at it's simplest. More interestingly though if DNA contamination isn't true it is an interesting follow up of what those reads do and mean.
-There isn't much you can do with ambiguous reads. The only work around ambiguous reads would be to get longer reads and hope that they will be less ambiguous
+The one reads that go into differential analysis are assigned reads. All other reads are simply discarded for the purpose of RNAseq analysis. No feature reads depending on the study would be one of the most interesting "can of worms". Together with other metrics no feature can suggest DNA contamination at it's simplest. More interestingly though if DNA contamination isn't true it is an interesting follow up of what those reads do and mean in your experiment, once again a good place to start is to [BLAST them](https://blast.ncbi.nlm.nih.gov/Blast.cgi). There isn't much you can do with ambiguous reads. One can try a different annotation, but really the only work around would be to get longer reads and hope that they will be less ambiguous. Similar to ambiguous reads long reads could help with multi-mapping reads. One other possible solution is to look where reads multi-map and perhaps if reads only multi-map to one other location and that location hasn't been annotated with a feature, reassign those reads to a known feature. This however is very speculative topic, which we won't go into in this book. For our purpose unfortunately we simply going to discard those reads.
+
+Coming back to a threshold value and what to expect. Typically for mouse RNAseq I tend to see approximately around 60% of reads being assigned to features. That is 60 % out of your 80 % or so mapped reads, so about 50 % of your total library goes into RNAseq analysis. It is a lossy process.
+
+```
+¯\_(ツ)_/¯
+
+```
 
 ## FastQC
 
@@ -93,6 +121,7 @@ Overrepresented sequences could mean a couple of different things
 - your library is highly duplicated
 - issues at the library preparation 
 - issues at the instrument
+
 ## Intragenic vs Intergenic region
 
 ## Reads mapping bias
@@ -101,3 +130,10 @@ If the RNA wasn't carefully treated and became fragmented then you are more like
 for reads mapping
 
 ## Insert size distribution
+
+## Where to look for more help
+
+- Biostarts
+- SeqAnswers
+- googling in general
+- at the end of the day best way to get information is look at the source code OR ask the author
