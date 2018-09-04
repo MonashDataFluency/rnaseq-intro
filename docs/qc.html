@@ -80,8 +80,9 @@
 </ul></li>
 <li class="chapter" data-level="4" data-path="gene-annotation.html"><a href="gene-annotation.html"><i class="fa fa-check"></i><b>4</b> Gene annotation</a></li>
 <li class="chapter" data-level="5" data-path="raw-data.html"><a href="raw-data.html"><i class="fa fa-check"></i><b>5</b> Raw data</a><ul>
-<li class="chapter" data-level="5.1" data-path="raw-data.html"><a href="raw-data.html#fastq"><i class="fa fa-check"></i><b>5.1</b> FASTQ</a></li>
-<li class="chapter" data-level="5.2" data-path="raw-data.html"><a href="raw-data.html#unix-tooling"><i class="fa fa-check"></i><b>5.2</b> Unix tooling</a></li>
+<li class="chapter" data-level="5.1" data-path="raw-data.html"><a href="raw-data.html#introduction-1"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="raw-data.html"><a href="raw-data.html#fastq"><i class="fa fa-check"></i><b>5.2</b> FASTQ</a></li>
+<li class="chapter" data-level="5.3" data-path="raw-data.html"><a href="raw-data.html#unix-tooling"><i class="fa fa-check"></i><b>5.3</b> Unix tooling</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html"><i class="fa fa-check"></i><b>6</b> RNAseq bioinformatics workflow</a><ul>
 <li class="chapter" data-level="6.1" data-path="rnaseq-bioinformatics-workflow.html"><a href="rnaseq-bioinformatics-workflow.html#adapter-trimming"><i class="fa fa-check"></i><b>6.1</b> Adapter trimming</a></li>
@@ -95,8 +96,10 @@
 <li class="chapter" data-level="7.2" data-path="qc.html"><a href="qc.html#star-aligner"><i class="fa fa-check"></i><b>7.2</b> STAR aligner</a></li>
 <li class="chapter" data-level="7.3" data-path="qc.html"><a href="qc.html#number-of-assigned-reads"><i class="fa fa-check"></i><b>7.3</b> Number of assigned reads</a></li>
 <li class="chapter" data-level="7.4" data-path="qc.html"><a href="qc.html#fastqc"><i class="fa fa-check"></i><b>7.4</b> FastQC</a></li>
-<li class="chapter" data-level="7.5" data-path="qc.html"><a href="qc.html#reads-mapping-bias"><i class="fa fa-check"></i><b>7.5</b> Reads mapping bias</a></li>
-<li class="chapter" data-level="7.6" data-path="qc.html"><a href="qc.html#insert-size-distribution"><i class="fa fa-check"></i><b>7.6</b> Insert size distribution</a></li>
+<li class="chapter" data-level="7.5" data-path="qc.html"><a href="qc.html#intragenic-vs-intergenic-region"><i class="fa fa-check"></i><b>7.5</b> Intragenic vs Intergenic region</a></li>
+<li class="chapter" data-level="7.6" data-path="qc.html"><a href="qc.html#reads-mapping-bias"><i class="fa fa-check"></i><b>7.6</b> Reads mapping bias</a></li>
+<li class="chapter" data-level="7.7" data-path="qc.html"><a href="qc.html#insert-size-distribution"><i class="fa fa-check"></i><b>7.7</b> Insert size distribution</a></li>
+<li class="chapter" data-level="7.8" data-path="qc.html"><a href="qc.html#where-to-look-for-more-help"><i class="fa fa-check"></i><b>7.8</b> Where to look for more help</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html"><i class="fa fa-check"></i><b>8</b> All about RNAseq</a><ul>
 <li class="chapter" data-level="8.1" data-path="all-about-rnaseq.html"><a href="all-about-rnaseq.html#general"><i class="fa fa-check"></i><b>8.1</b> General</a></li>
@@ -174,6 +177,20 @@ integer. A value 255 indicates that the mapping quality is not available.</code>
 <li>unmapped</li>
 </ul>
 <p>Remember discussion about soft-clipping reads from previous section. If the read had been soft-clipped beyond the threshold then it’ll be marked as too short and discarded. Going back to troubleshooting of unmapped reads if you are getting large proportion of reads that are too short, then despite what being said in the trimming section it is worth while trying to adapter and quality trim before mapping. Perhaps your library has high adapter content.</p>
+<div id="details-1" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Details</h3>
+<p>There is a slight variation in how different tools count and interpret mapped reads. In terms of terminology there are three important concepts one need to understand:</p>
+<ul>
+<li>library size / total number of reads</li>
+<li>primary and secondary alignments</li>
+<li>supplementary alignment</li>
+</ul>
+<p>Library size in this context means total number of reads in the FASTQ files, this is typically in order of millions of reads, 20 million reads per sample seems to be used as a rule of thumb for RNAseq analysis, but that number can be anywhere between 5 and 80 millions per sample. Remember from previous section that we are trying to map all reads from FASTQ to the reference. Therefore you expect to find all 20 million in your bam file. Bam file holds one alignment per line and remember that reads can have multiple alignments, there fore one read could occupy multiple lines. If the read maps to multiple location one of those location will be marked as primary (a.k.a primary alignment) all other will be marked as secondary. It is outside of the scope of this book how primary alignment gets picked, sometimes this is rather random process. Supplementary alignment on the other hand marking a read that has chimeric alignment such mapping between two chromosomes or an inversion of some kind. A uniquely mapped reads are the ones that actually going to make into differential analysis those are the read that have been marked as primary but also carry mapq of 255.</p>
+<p>This command will give you the number of uniquely mapped reads that are good for differential expression</p>
+<pre><code>samtools view -c -F 256 -q 255 ctrl_rep1_sorted_mdups.bam</code></pre>
+<p>To actually get number of reads that mapped to the reference one need to keep track of number of unmapped reads as well and output them to bam, this is usually default behaviour. If you see 100% mapping rate I would suspect first thing that you didn’t output unmapped reads into bam file</p>
+<p>Also note that for paired end library total number of reads is double to what it is in the fastq file, because there is two fastq files R1 and R2. While STARs interpretation of reads isn’t strictly correct it is actually the correct number of fragments that you need to consider for differential analysis.</p>
+</div>
 </div>
 <div id="number-of-assigned-reads" class="section level2">
 <h2><span class="header-section-number">7.3</span> Number of assigned reads</h2>
@@ -196,7 +213,10 @@ integer. A value 255 indicates that the mapping quality is not available.</code>
 <li>Unassigned Nonjunction: reads that do not span exons will not be assigned if the ‘–countSplitAlignmentsOnly’ option is specified.</li>
 <li>Unassigned Overlapping Length: no features/meta-features were found to have the minimum required overlap length.</li>
 </ul>
-<p>No feature reads depending on the study would be one of the most interesting “can of worms”. Together with other metrics no feature can suggest DNA contamination at it’s simplest. More interestingly though if DNA contamination isn’t true it is an interesting follow up of what those reads do and mean. There isn’t much you can do with ambiguous reads. The only work around ambiguous reads would be to get longer reads and hope that they will be less ambiguous</p>
+<p>The one reads that go into differential analysis are assigned reads. All other reads are simply discarded for the purpose of RNAseq analysis. No feature reads depending on the study would be one of the most interesting “can of worms”. Together with other metrics no feature can suggest DNA contamination at it’s simplest. More interestingly though if DNA contamination isn’t true it is an interesting follow up of what those reads do and mean in your experiment, once again a good place to start is to <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">BLAST them</a>. There isn’t much you can do with ambiguous reads. One can try a different annotation, but really the only work around would be to get longer reads and hope that they will be less ambiguous. Similar to ambiguous reads long reads could help with multi-mapping reads. One other possible solution is to look where reads multi-map and perhaps if reads only multi-map to one other location and that location hasn’t been annotated with a feature, reassign those reads to a known feature. This however is very speculative topic, which we won’t go into in this book. For our purpose unfortunately we simply going to discard those reads.</p>
+<p>Coming back to a threshold value and what to expect. Typically for mouse RNAseq I tend to see approximately around 60% of reads being assigned to features. That is 60 % out of your 80 % or so mapped reads, so about 50 % of your total library goes into RNAseq analysis. It is a lossy process.</p>
+<pre><code>¯\_(ツ)_/¯
+</code></pre>
 </div>
 <div id="fastqc" class="section level2">
 <h2><span class="header-section-number">7.4</span> FastQC</h2>
@@ -204,15 +224,27 @@ integer. A value 255 indicates that the mapping quality is not available.</code>
 <ul>
 <li>your library is highly duplicated</li>
 <li>issues at the library preparation</li>
-<li>issues at the instrument ## Intragenic vs Intergenic region</li>
+<li>issues at the instrument</li>
 </ul>
 </div>
+<div id="intragenic-vs-intergenic-region" class="section level2">
+<h2><span class="header-section-number">7.5</span> Intragenic vs Intergenic region</h2>
+</div>
 <div id="reads-mapping-bias" class="section level2">
-<h2><span class="header-section-number">7.5</span> Reads mapping bias</h2>
+<h2><span class="header-section-number">7.6</span> Reads mapping bias</h2>
 <p>If the RNA wasn’t carefully treated and became fragmented then you are more likely to see 3 prime bias for reads mapping</p>
 </div>
 <div id="insert-size-distribution" class="section level2">
-<h2><span class="header-section-number">7.6</span> Insert size distribution</h2>
+<h2><span class="header-section-number">7.7</span> Insert size distribution</h2>
+</div>
+<div id="where-to-look-for-more-help" class="section level2">
+<h2><span class="header-section-number">7.8</span> Where to look for more help</h2>
+<ul>
+<li>Biostarts</li>
+<li>SeqAnswers</li>
+<li>googling in general</li>
+<li>at the end of the day best way to get information is look at the source code OR ask the author</li>
+</ul>
 
 </div>
 </div>
