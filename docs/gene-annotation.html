@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="qc.html">
-<link rel="next" href="lesson-plan.html">
+<link rel="prev" href="reference-sequence.html">
+<link rel="next" href="raw-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -122,61 +122,28 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="all-about-rnaseq" class="section level1">
-<h1><span class="header-section-number">8</span> All about RNAseq</h1>
-<div id="general" class="section level2">
-<h2><span class="header-section-number">8.1</span> General</h2>
-<ul>
-<li>Functional annotation of the mouse (FANTOM)</li>
-<li>Encyclopedia of DNA elements (ENCODE)</li>
-<li>Single loci can lead to to six different mRNA isoforms, on average, instead of single transcript</li>
-</ul>
+<div id="gene-annotation" class="section level1">
+<h1><span class="header-section-number">4</span> Gene annotation</h1>
+<p>As discussed in [reference genome] module. The reference genome is just a string of charaters.</p>
+<div class="figure">
+<img src="figures/gene_diagram.png" alt=" "  />
+<p class="caption">
+</p>
 </div>
-<div id="technology" class="section level2">
-<h2><span class="header-section-number">8.2</span> Technology</h2>
-<p>What is it for?</p>
-<ul>
-<li>what is expressed (exon locatios /strand) ?</li>
-<li>how much is expressed (hits per transcripts) ?</li>
-</ul>
-<p>old way to do DE - microarray</p>
-<ul>
-<li>do need as much starting material for RNAseq</li>
-</ul>
-<p>Noise:</p>
-<ul>
-<li>biological</li>
-<li>poisson noise from samplinig (have level of uncertanty at low level, low counts)</li>
-<li><p>technical</p></li>
-<li>Effect size (do the genes go up by alot or not - high signal)</li>
-<li><p>amount of variation</p></li>
-</ul>
-<p>get better depth using poly-A enriched, because rRNA depletion will leave lots of other RNA around therefore diluting mRNA by some percent</p>
-<p>mean fragment size ~ 300 bp</p>
-<p>measure of uncertanty of the base call</p>
+<div class="figure">
+<img src="figures/features_diagram.png" alt=" "  />
+<p class="caption">
+</p>
 </div>
-<div id="differential-expression-de" class="section level2">
-<h2><span class="header-section-number">8.3</span> Differential expression (DE)</h2>
-<ul>
-<li>library size is total number of mapped reads. Library size might vary for individual samples.</li>
-<li><p>Total number of reads per gene proportional to:</p>
-<ul>
-<li>gene expression level (to get cpm (count per million) divide each read count by library size multiplied by million). This is enable you to compare different library sized samples</li>
-<li>transcript length</li>
-<li>sequencing depth of the library # Ideas</li>
-</ul></li>
-<li>have a url with multiqc report ready for browsing</li>
-<li><p>explain reference file (FASTA) and annotation files (GTF)</p></li>
-</ul>
-</div>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="qc.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="lesson-plan.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="reference-sequence.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="raw-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

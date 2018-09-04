@@ -8,6 +8,7 @@ header-includes:
   - \usepackage{fancyhdr}
   - \pagestyle{fancy}
   - \fancyhead[L]{}  
+  - \DeclareUnicodeCharacter{2212}{-}
 ---
 
 # Introduction to RNAseq {#index -}
